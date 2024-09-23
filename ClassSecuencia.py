@@ -13,20 +13,35 @@ class Secuencia(Ic.Conjuntable):
     def __init__(self, *params):
         """
         Constructor de la secuencia que contendra objetos del tipo Empleado.
-        :param params: Si no recibe nada es el constructor por omision.
-                       Si recibe un parametro, es el constructor por parametros
+        :param params: Forzosamente tengo que especificar el comparador
+                       que utilizare para compara objetos dentro de la secuencia
+                       Si no recibe nada mas es el constructor por omision.
+                       Si recibe 2 parametros, es el constructor por parametros
         """
-        if len(params) == 0:  # Constructor por omision = conjunto de tamanio 20
+        if len(params) == 1:  # Constructor por omision = conjunto de tamanio 20
             self.__datos = np.empty(20, dtype=Em.Empleado)
             self.__nd = 0
+            self.__comparador = params[0]
             print("Se creo una Secuencia para 20 elementos!\n")
-        elif len(params) == 1:  # Constructor por parametros
+        elif len(params) == 2:  # Constructor por parametros
             try:
                 self.__datos = np.empty(params[0], dtype=Em.Empleado)
                 self.__nd = 0
+                self.__comparador = params[1]
                 print(f"Se creo una Secuencia para {params[0]} elementos!\n")
             except ValueError:
                 print("El tamanio del arreglo debe ser positivo!\n")
+        else:
+            raise ValueError("El parametro recibido no es valido!\n")
+
+    @property
+    def comparador(self):
+        """
+        Metodo GET para obtener el tipo de comparador de la secuencia de datos
+        :return: EL arreglo de datos
+        :rtype: np.array
+        """
+        return self.__datos
 
     @property
     def datos(self):
@@ -45,6 +60,15 @@ class Secuencia(Ic.Conjuntable):
         :rtype: int
         """
         return self.__nd
+
+    # Metodo set
+    @comparador.setter
+    def comparador(self, nuevo_comparador: callable):
+        """
+        Configura el comparador que se utilizará para ordenar.
+        :param nuevo_comparador: Función que actúa como comparador.
+        """
+        self.__comparador = nuevo_comparador
 
     def agregar(self, *params):
         """
@@ -211,7 +235,7 @@ class Secuencia(Ic.Conjuntable):
         except StopIteration:
             return copia
 
-    def ordenar(self, comparador):
+    def ordenar(self):
         """
         Metodo que permite devuelve la Secuencia de elementos ordenada.
         Utiliza Quick Sort o Merge Sort y habilita la existencia de dos comparadores
@@ -219,7 +243,7 @@ class Secuencia(Ic.Conjuntable):
         salario, por edad y nombre, salario y nombre, etc.
         :return: La Secuencia ordenada
         """
-        self.ordenar_recursivo(0, self.__nd, comparador)
+        self.ordenar_recursivo(0, self.__nd - 1, self.__comparador)
         return self
 
 # Metodos extra
@@ -324,39 +348,3 @@ class Secuencia(Ic.Conjuntable):
             self.ordenar_recursivo(inicio, posicion_part - 1, comparador)
             self.ordenar_recursivo(posicion_part + 1, fin, comparador)
         return self.__datos
-
-# Metodos comparadores entre empleados.
-
-
-def apellido_nombre(a: Em.Empleado, b: Em.Empleado) -> int:
-    nombre_1 = a.apellidos + ' ' + a.nombre
-    nombre_2 = b.apellidos + ' ' + b.nombre
-    if nombre_1 < nombre_2:
-        return -1
-    elif nombre_1 > nombre_2:
-        return 1
-    else:
-        return 0
-
-
-def edad(a: Em.Empleado, b: Em.Empleado) -> int:
-    if a > b:
-        return -1
-    else:
-        return 1
-
-
-def salario_nombre_edad(a: Em.Empleado, b: Em.Empleado) -> float:
-    dif_salario = a.salario - b.salario
-    # Si son iguales bajo el parametro salario
-    if dif_salario == 0:
-        dif_nombre = apellido_nombre(a, b)
-        if dif_nombre == 0:
-            dif_edad = edad(a, b)
-            return dif_edad
-        return dif_nombre
-    return dif_salario
-
-
-def numero_empleado(a: Em.Empleado, b: Em.Empleado) -> int:
-    return a.num_emp - b.num_emp

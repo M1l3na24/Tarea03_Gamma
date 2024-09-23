@@ -119,7 +119,7 @@ class Persona:
         :return: La Persona en formato str
         :rtype: str
         """
-        return ("Persona:: {} {} | Nacimiento: {} | "
+        return ("Persona: {} {} | Nacimiento: {} | "
                 "Email: {} | Edad: {}").format(self.__nombre,
                                                self.__apellidos,
                                                self.__nacimiento.strftime("%d/%m/%Y"),
@@ -184,5 +184,3 @@ if __name__ == "__main__":
     print(per3)
     per3.email = input("Escribe el correo electrónico: ")
     print(per3)
-
-
