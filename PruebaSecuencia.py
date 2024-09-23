@@ -289,17 +289,17 @@ while True:
             else:
                 if a.esta_vacia():
                     print("La Secuencia está vacia")
-                    break
+                    continue
                 else:
                     print("La Secuencia no está vacia")
-                    break
+                    continue
         case "10":  # Determinar la cardinalidad de la Secuencia
             if a is None:
                 print("Debes crear primero una Secuencia!\n")
                 continue
             else:
                 print(f"La cardinalidad de la secuencia es {a.cardinalidad()}")
-                break
+                continue
         case "11":  # Vaciar la Secuencia
             if a is None:
                 print("Debes crear primero una Secuencia!\n")
@@ -307,7 +307,7 @@ while True:
             else:
                 a.vaciar()
                 print("La Secuencia ha sido vaciada exitosamente!\n")
-                break
+                continue
         case "12":  # Devolver la Secuencia con elementos unicos
             if a is None:
                 print("Debes crear primero una Secuencia!\n")
