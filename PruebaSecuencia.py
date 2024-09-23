@@ -323,18 +323,22 @@ while True:
                         a.comparador = apellido_nombre
                         ordenada = a.ordenar()
                         print(ordenada)
+                        break
                     case "2":  # Edad
                         a.comparador = edad
                         ordenada = a.ordenar()
                         print(ordenada)
+                        break
                     case "3":  # Salario, nombre y edad
                         a.comparador = salario_nombre_edad
                         ordenada = a.ordenar()
                         print(ordenada)
+                        break
                     case "4":  # Numero de empleado
                         a.comparador = numero_empleado
                         ordenada = a.ordenar()
                         print(ordenada)
+                        break
                     case "S":  # Salir
                         print('Regresando al menu principal')
             opcion = ""
