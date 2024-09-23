@@ -2,7 +2,7 @@
 # Objetivo: Mostrar la implementacion de la "interfaz" Conjuntable, para
 #           ilustrar la creacion de un TAD de objetos.
 # Autores: Milena Rivera, Carlos Barrera, Isaac Garrido, Mayela Rosas
-# Version: 18-09-2024
+# Version: 23-09-2024
 
 import Interfaz_Conjuntable as Ic
 import Empleado as Em
@@ -13,24 +13,27 @@ class Secuencia(Ic.Conjuntable):
     def __init__(self, *params):
         """
         Constructor de la secuencia que contendra objetos del tipo Empleado.
-        :param params: Forzosamente tengo que especificar el comparador
-                       que utilizare para compara objetos dentro de la secuencia
-                       Si no recibe nada mas es el constructor por omision.
-                       Si recibe 2 parametros, es el constructor por parametros
+        :param params: Forzosamente se tiene que especificar el comparador
+                       que se utilizara para compara objetos dentro de la secuencia
+                       Si no recibe nada mas es el constructor por omision (tamanio de la secuencia = 20).
+                       Si recibe 2 parametros, es el constructor por parametros.
         """
         if len(params) == 1:  # Constructor por omision = conjunto de tamanio 20
             self.__datos = np.empty(20, dtype=Em.Empleado)
             self.__nd = 0
-            self.__comparador = params[0]
+            if params[0] in ["apellido_nombre", "edad", "salario_nombre_edad", "numero_empleado"]:
+                self.__comparador = params[0]
+            else:
+                raise ValueError("El tipo de comparador no existe")
             print("Se creo una Secuencia para 20 elementos!\n")
         elif len(params) == 2:  # Constructor por parametros
-            try:
-                self.__datos = np.empty(params[0], dtype=Em.Empleado)
-                self.__nd = 0
+            self.__datos = np.empty(params[0], dtype=Em.Empleado)
+            self.__nd = 0
+            if params[1] in ["apellido_nombre", "edad", "salario_nombre_edad", "numero_empleado"]:
                 self.__comparador = params[1]
-                print(f"Se creo una Secuencia para {params[0]} elementos!\n")
-            except ValueError:
-                print("El tamanio del arreglo debe ser positivo!\n")
+            else:
+                raise ValueError("El tipo de comparador no existe")
+            print(f"Se creo una Secuencia para {params[0]} elementos!\n")
         else:
             raise ValueError("El parametro recibido no es valido!\n")
 
@@ -65,8 +68,8 @@ class Secuencia(Ic.Conjuntable):
     @comparador.setter
     def comparador(self, nuevo_comparador: callable):
         """
-        Configura el comparador que se utilizará para ordenar.
-        :param nuevo_comparador: Función que actúa como comparador.
+        Metodo SET para configurar el comparador que se utilizara para ordenar.
+        :param nuevo_comparador: Funcion que actua como comparador.
         """
         self.__comparador = nuevo_comparador
 
@@ -90,6 +93,8 @@ class Secuencia(Ic.Conjuntable):
                     self.__nd += 1
             except IndexError:
                 print("No es posible agregar mas elementos!\n")
+        else:  # le doy mas de dos parametros
+            raise Exception("El numero de parametros es invalido, debe ser 1 o 2")
 
     def eliminar(self, *params):
         """
@@ -157,7 +162,6 @@ class Secuencia(Ic.Conjuntable):
                 if not encontro:
                     print(f"El elemento {params[0]} no esta en la Secuencia!\n")
 
-    # carlos
     def contiene(self, elemento: Em.Empleado) -> bool:
         """
         Metodo que permite saber si un elemento se encuentra contenido
@@ -199,7 +203,7 @@ class Secuencia(Ic.Conjuntable):
 
     def esta_vacia(self) -> bool:
         """
-        Metodo que permite saber sí la Secuencia esta vacia.
+        Metodo que permite saber si la Secuencia esta vacia.
         :return: True si esta vacia, False en otro caso.
         :rtype: bool
         """
@@ -221,11 +225,11 @@ class Secuencia(Ic.Conjuntable):
 
     def secuencia_unico(self):
         """
-        Metodo que permite devuelve la Secuencia de elementos unicos
+        Metodo que permite devolver la Secuencia de elementos unicos
         (sin repeticiones).
         :return: La Secuencia sin repetidos
         """
-        copia = Secuencia(len(self.__datos))
+        copia = Secuencia(len(self.__datos), self.__comparador)
         it1 = iter(self)
         try:
             while True:
@@ -237,13 +241,14 @@ class Secuencia(Ic.Conjuntable):
 
     def ordenar(self):
         """
-        Metodo que permite devuelve la Secuencia de elementos ordenada.
-        Utiliza Quick Sort o Merge Sort y habilita la existencia de dos comparadores
-        por ejemplo, en el caso de los Empleados, se pueden ordenar por edad, por
-        salario, por edad y nombre, salario y nombre, etc.
+        Metodo que permite devuelver la Secuencia de elementos ordenada.
+        Utiliza Quick Sort y habilita la existencia de 4 comparadores
+        por ejemplo, en el caso de los Empleados, se pueden ordenar por
+        apellido y nombre, edad descendentemente, salario, nombre y edad\n
+        o por numero de empleado.
         :return: La Secuencia ordenada
         """
-        self.ordenar_recursivo(0, self.__nd - 1, self.__comparador)
+        self.__ordenar_recursivo(0, self.__nd - 1, self.__comparador)
         return self
 
 # Metodos extra
@@ -313,7 +318,7 @@ class Secuencia(Ic.Conjuntable):
         Esta funcion organiza los elementos del directorio de manera que todos los elementos
         menores o iguales al pivote estan a la izquierda y todos los elementos mayores estan
         a la derecha. El pivote se coloca en su posicion correcta.
-        :param inicio: La posici�n inicial
+        :param inicio: La posicion inicial
         :param fin: La posicion final
         :param comparador: El comparador con el que se desea hacer el ordenamiento
         :return: La posicion correcta del pivote
@@ -335,7 +340,7 @@ class Secuencia(Ic.Conjuntable):
         self.__datos[inicio], self.__datos[right] = self.__datos[right], self.__datos[inicio]
         return right  # Devolvemos la posicion correcta del pivote
 
-    def ordenar_recursivo(self, inicio, fin, comparador):
+    def __ordenar_recursivo(self, inicio, fin, comparador):
         """
         Esta funcion aplica recursivamente el algoritmo Quick Sort a los subarreglos definidos por el pivote.
         :param inicio: La posicion inicial
@@ -345,6 +350,6 @@ class Secuencia(Ic.Conjuntable):
         """
         if inicio < fin:
             posicion_part = self.__particion(inicio, fin, comparador)
-            self.ordenar_recursivo(inicio, posicion_part - 1, comparador)
-            self.ordenar_recursivo(posicion_part + 1, fin, comparador)
+            self.__ordenar_recursivo(inicio, posicion_part - 1, comparador)
+            self.__ordenar_recursivo(posicion_part + 1, fin, comparador)
         return self.__datos

@@ -1,6 +1,6 @@
 # Programa: Empleado.py
 # Objetivo: Ilustrar el uso de Herencia simple a través de la clase Persona
-# Autor: Gerardo
+# Autor: Gerardo Aviles
 # Fecha: 19-07-2024
 
 import Persona as Pe

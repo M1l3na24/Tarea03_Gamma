@@ -1,6 +1,6 @@
 # Programa: Persona.py
 # Objetivo: Clase que modela una Persona, se incluyen funciones para fechas
-# Autor: Ger
+# Autor: Gerardo Aviles
 # Fecha: 13-07-2024
 
 from datetime import date, datetime
