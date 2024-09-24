@@ -38,7 +38,7 @@ def leer_archivo(archivoo: str) -> Cs.Secuencia:
                 print(f"El archivo {archivoo} se leyo exitosamente!\n")
         except FileNotFoundError:
             print("El archivo no existe!\n")
-            archivoo = input("Escribe el nombre del archivo CSV: ")
+            archivoo = input("Escribe el nombre del archivo CSV (incluyendo la extension del tipo de archivo '.csv'): ")
     return secuencia
 
 
@@ -179,13 +179,13 @@ while True:
                         while True:  # Para validar que el numero de Empleado sea unico
                             num_emp = int(input("Escribe el id de empleado: "))
                             if num_emp not in id_emp1:
-                                id_emp1.add(num_emp)
                                 break
                             else:
                                 print(f"El numero de empleado {num_emp} ya existe, se debe ingresar otro!\n")
                                 continue
                         emp = crear_empleado(num_emp)
                         if emp is not None:
+                            id_emp1.add(num_emp)
                             a.agregar(emp)
                             print("El elemento se agrego exitosamente!\n")
                         else:
@@ -207,13 +207,13 @@ while True:
                             num_emp = int(input("Escribe el id de empleado: "))
                             n_veces = int(input("Escribe cuantas veces lo deseas agregar: "))
                             if num_emp not in id_emp1:
-                                id_emp1.add(num_emp)
                                 break
                             else:
                                 print(f"El numero de empleado {num_emp} ya existe, se debe ingresar otro!\n")
                                 continue
                         emp = crear_empleado(num_emp)
                         if emp is not None:
+                            id_emp1.add(num_emp)
                             a.agregar(emp, n_veces)
                             print(f"El elemento se agrego exitosamente {n_veces} veces!\n")
                         else:
@@ -228,7 +228,7 @@ while True:
             print("Este metodo permite crear una secuencia nueva adecuada al tamanio de datos del archivo que se \n"
                   "introduzca. No importa si ya se habia creado una secuencia anteriormente. El comparador \n"
                   "por default con el que se creara sera por edad.")
-            archivo = input("Escribe el nombre del archivo CSV: ")
+            archivo = input("Escribe el nombre del archivo CSV (incluyendo la extension del tipo de archivo '.csv'): ")
             a = leer_archivo(archivo)
         case "5":  # Eliminar un elemento de la Secuencia
             try:
