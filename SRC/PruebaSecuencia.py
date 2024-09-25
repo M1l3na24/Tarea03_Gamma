@@ -275,7 +275,7 @@ while True:
                         if emp is not None and a.contiene(emp):
                             a.eliminar(emp, n_veces)
                             id_emp1.remove(num_emp)
-                            print(f"El elemento se elimino exitosamente {n_veces} veces!\n")
+                            print(f"El elemento se elimino exitosamente!\n")
                         else:
                             print("El elemento no fue eliminado!\n")
                         resp = input("Deseas seguir eliminando elementos? (s/n): ").lower()
