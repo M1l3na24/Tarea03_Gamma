@@ -1,7 +1,7 @@
 # Programa: PruebaSecuencia.py
 # Objetivo: Prueba de los metodos de la clase conjunto.
 # Autores: Milena Rivera, Carlos Barrera, Isaac Garrido, Mayela Rosas
-# Version: 23-09-2024
+# Version: 24-09-2024
 
 
 import ClassSecuencia as Cs

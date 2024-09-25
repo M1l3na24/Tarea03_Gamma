@@ -2,7 +2,7 @@
 # Objetivo: Mostrar la implementacion de la "interfaz" Conjuntable, para
 #           ilustrar la creacion de un TAD de objetos.
 # Autores: Milena Rivera, Carlos Barrera, Isaac Garrido, Mayela Rosas
-# Version: 23-09-2024
+# Version: 24-09-2024
 
 import Interfaz_Conjuntable as Ic
 import Empleado as Em
