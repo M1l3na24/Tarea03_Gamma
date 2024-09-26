@@ -343,7 +343,7 @@ class Secuencia(Ic.Conjuntable):
                 break
             else:  # Intercambiamos los datos que no cumplieron las condiciones
                 self.__datos[left], self.__datos[right] = self.__datos[right], self.__datos[left]
-                # Movemos el pivote a la posici�n correcta
+                # Movemos el pivote a la posicion correcta
         self.__datos[inicio], self.__datos[right] = self.__datos[right], self.__datos[inicio]
         return right  # Devolvemos la posicion correcta del pivote
 
